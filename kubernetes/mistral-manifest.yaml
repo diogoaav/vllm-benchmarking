@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm-server
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vllm-server
+  template:
+    metadata:
+      labels:
+        app: vllm-server
+    spec:
+      hostIPC: true
+      tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+      - key: amd.com/gpu
+        operator: Exists
+        effect: NoSchedule
+      containers:
+      - name: vllm-container
+        image: rocm/vllm:rocm6.4.1_vllm_0.10.0_20250812
+        ports:
+        - containerPort: 8000
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+          echo "Uninstalling preinstalled vLLM..."
+          pip uninstall -y vllm
+          rm -rf vllm
+          
+          echo "Cloning and building vLLM from specific commit..."
+          cd /tmp
+          git clone https://github.com/vllm-project/vllm.git
+          cd vllm
+          git checkout 8a19303173881e4197c7656727c6f2b296faa7fc
+          
+          echo "Building vLLM with ROCm optimizations..."
+          MAX_JOBS=128 PYTORCH_ROCM_ARCH='gfx942' GPU_ARCHS='gfx942' python setup.py develop
+          
+          echo "Cleaning vLLM cache..."
+          rm -rf /root/.cache/vllm
+          
+          echo "Starting vLLM server with optimized configuration..."
+          VLLM_USE_V1=1 \
+          SAFETENSORS_FAST_GPU=1 \
+          VLLM_ROCM_USE_AITER=1 \
+          VLLM_ROCM_USE_AITER_MOE=1 \
+          VLLM_USE_TRITON_FLASH_ATTN=0 \
+          vllm serve mistralai/Mistral-Small-24B-Instruct-2501 \
+            --tensor-parallel-size 1 \
+            --distributed-executor-backend mp \
+            --enable-prefix-caching \
+        env:
+        - name: VLLM_USE_V1
+          value: "1"
+        - name: SAFETENSORS_FAST_GPU
+          value: "1"
+        - name: VLLM_ROCM_USE_AITER
+          value: "1"
+        - name: VLLM_ROCM_USE_AITER_MOE
+          value: "1"
+        - name: VLLM_USE_TRITON_FLASH_ATTN
+          value: "0"
+        - name: PYTORCH_ROCM_ARCH
+          value: "gfx942"
+        - name: GPU_ARCHS
+          value: "gfx942"
+        - name: HUGGING_FACE_HUB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: hf-token-secret-new
+              key: token
+        resources:
+          limits:
+            amd.com/gpu: 1
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: shm
+          mountPath: /dev/shm
+        - name: dev-kfd
+          mountPath: /dev/kfd
+        - name: dev-dri
+          mountPath: /dev/dri
+        securityContext:
+          capabilities:
+            add:
+            - SYS_PTRACE
+          seccompProfile:
+            type: Unconfined
+      securityContext:
+        supplementalGroups:
+        - 44
+      volumes:
+      - name: shm
+        emptyDir:
+          medium: Memory
+          sizeLimit: "64Gi"
+      - name: dev-kfd
+        hostPath:
+          path: /dev/kfd
+      - name: dev-dri
+        hostPath:
+          path: /dev/dri
+      - name: data
+        emptyDir: {}

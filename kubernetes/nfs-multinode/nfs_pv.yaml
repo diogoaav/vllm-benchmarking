@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: do-nfs-pv
+  namespace: default
+  labels:
+    type: nfs-model-storage # Label to identify this specific PV
+spec:
+  capacity:
+    storage: 1000Gi # This size should ideally match your share's size
+  accessModes:
+    - ReadWriteMany # The key feature of NFS for shared access
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    # ⬇️ From the "host" field in the API response
+    server: "10.128.0.11"
+    # ⬇️ From the "mount_path" field in the API response
+    path: "/2633050/53ef221c-e8e7-4273-acd8-a6c947c4e9fe"
+
+    

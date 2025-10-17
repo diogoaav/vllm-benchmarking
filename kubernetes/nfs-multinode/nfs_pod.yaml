@@ -1,0 +1,19 @@
+kind: Pod
+metadata:
+  name: nfs-test-pod
+  namespace: default
+spec:
+   # 1. Define the volume at the pod level, referencing your PVC by name.
+  volumes:
+      - name: my-nfs-share
+        persistentVolumeClaim:
+          claimName: do-nfs-pvc
+  containers:
+     - name: my-app-container
+       image: busybox
+       # This command writes the current date to a log file on the NFS share every 5 seconds.
+       command: ["/bin/sh", "-c", "while true; do date >> /data/test.log; sleep 5; done"]
+       # 2. Mount the volume (defined above) into the container's filesystem.
+       volumeMounts:
+         - name: my-nfs-share # ⬅️ Must match the volume name from above
+           mountPath: "/data" # ⬅️ The path where it will be available inside your container
