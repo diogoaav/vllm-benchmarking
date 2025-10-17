@@ -1,0 +1,50 @@
+- concurrency: 1
+  num_prompts: 10
+  prompt_length: 32
+  output_length: 64
+  request_rate: "inf"
+  model: "modularai/Llama-3.1-8B-Instruct-GGUF"
+  backend: "vllm"
+  base_url: "http://127.0.0.1:8001"
+  endpoint: "/v1/completions"
+
+- concurrency: 8
+  num_prompts: 10
+  prompt_length: 32
+  output_length: 64
+  request_rate: "inf"
+  model: "modularai/Llama-3.1-8B-Instruct-GGUF"
+  backend: "vllm"
+  base_url: "http://127.0.0.1:8001"
+  endpoint: "/v1/completions"
+
+- concurrency: 32
+  num_prompts: 10
+  prompt_length: 32
+  output_length: 64
+  request_rate: "inf"
+  model: "modularai/Llama-3.1-8B-Instruct-GGUF"
+  backend: "vllm"
+  base_url: "http://127.0.0.1:8001"
+  endpoint: "/v1/completions"
+
+- concurrency: 64
+  num_prompts: 10
+  prompt_length: 32
+  output_length: 64
+  request_rate: "inf"
+  model: "modularai/Llama-3.1-8B-Instruct-GGUF"
+  backend: "vllm"
+  base_url: "http://127.0.0.1:8001"
+  endpoint: "/v1/completions"
+
+
+- concurrency: 128
+  num_prompts: 10
+  prompt_length: 32
+  output_length: 64
+  request_rate: "inf"
+  model: "modularai/Llama-3.1-8B-Instruct-GGUF"
+  backend: "vllm"
+  base_url: "http://127.0.0.1:8001"
+  endpoint: "/v1/completions"

@@ -1,0 +1,26 @@
+FROM rocm/vllm:latest
+
+# Clone and install vLLM from source (with ROCm enabled)
+RUN git clone https://github.com/vllm-project/vllm.git /root/vllm
+
+
+RUN ln -sf /usr/bin/python3 /usr/bin/python
+
+# Set up virtual environment
+RUN python -m venv /root/myenv && \
+    cd /root/vllm && \
+    /root/myenv/bin/pip install --upgrade pip setuptools wheel numpy && \
+    /root/myenv/bin/pip install pandas datasets transformers pillow vllm
+
+
+# Default working dir
+WORKDIR /root
+
+# Create the mount point
+RUN mkdir -p /root/testbench
+
+RUN echo 'source /root/myenv/bin/activate' >> /root/.bashrc
+
+ENTRYPOINT []
+CMD ["/bin/bash"]
+

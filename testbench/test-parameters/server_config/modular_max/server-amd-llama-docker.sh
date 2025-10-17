@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Set Hugging Face token
+HUGGING_FACE_HUB_TOKEN="<your_huggingface_token_here>"
+
+docker run -d \
+    -v ~/.cache/huggingface:/root/.cache/huggingface \
+    --env "HUGGING_FACE_HUB_TOKEN=$HUGGING_FACE_HUB_TOKEN" \
+    -p 8001:8000 \
+    --group-add video \
+    --device /dev/kfd \
+    --device /dev/dri \
+    modular/max-amd:latest \
+    --model-path modularai/Llama-3.1-8B-Instruct-GGUF \
+    --disable-log-requests \
+    --tensor-parallel-size 1 \
+    --distributed-executor-backend mp \
+    --max-model-len 8192 \
+    --max-num-batched-tokens 65536 \
+    --kv-cache-dtype=auto \
+    --enable-prefix-caching &

@@ -1,0 +1,46 @@
+- num_prompts: 50
+  prompt_length: 1000
+  output_length: 2000
+  request_rate: "inf"
+  model: "deepseek-ai/DeepSeek-V3-0324"
+  backend: "openai"
+  base_url: "http://134.199.133.111:80"
+  endpoint: "/v1/completions"
+
+- num_prompts: 50
+  prompt_length: 5000
+  output_length: 1000
+  request_rate: "inf"
+  model: "deepseek-ai/DeepSeek-V3-0324"
+  backend: "openai"
+  base_url: "http://134.199.133.111:80"
+  endpoint: "/v1/completions"
+
+- num_prompts: 50
+  prompt_length: 5600
+  output_length: 140
+  request_rate: "inf"
+  model: "deepseek-ai/DeepSeek-V3-0324"
+  backend: "openai"
+  base_url: "http://134.199.133.111:80"
+  endpoint: "/v1/completions"
+
+- num_prompts: 50
+  prompt_length: 10000
+  output_length: 500
+  request_rate: "inf"
+  model: "deepseek-ai/DeepSeek-V3-0324"
+  backend: "openai"
+  base_url: "http://134.199.133.111:80"
+  endpoint: "/v1/completions"
+
+- num_prompts: 50
+  prompt_length: 30000
+  output_length: 100
+  request_rate: "inf"
+  model: "deepseek-ai/DeepSeek-V3-0324"
+  backend: "openai"
+  base_url: "http://134.199.133.111:80"
+  endpoint: "/v1/completions"
+
+

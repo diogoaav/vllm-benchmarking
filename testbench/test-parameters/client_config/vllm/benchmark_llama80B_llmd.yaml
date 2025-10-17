@@ -1,0 +1,75 @@
+- num_prompts: 1
+  prompt_length: 3500
+  output_length: 500
+  request_rate: "inf"
+  model: "nvidia/Llama-3.1-8B-Instruct-FP8"
+  backend: "openai"
+  base_url: "http://138.197.252.211:80"
+  endpoint: "/v1/completions"
+
+- num_prompts: 2
+  prompt_length: 3500
+  output_length: 500
+  request_rate: "inf"
+  model: "nvidia/Llama-3.1-8B-Instruct-FP8"
+  backend: "openai"
+  base_url: "http://138.197.252.211:80"
+  endpoint: "/v1/completions"
+
+- num_prompts: 4
+  prompt_length: 3500
+  output_length: 500
+  request_rate: "inf"
+  model: "nvidia/Llama-3.1-8B-Instruct-FP8"
+  backend: "openai"
+  base_url: "http://138.197.252.211:80"
+  endpoint: "/v1/completions"
+
+- num_prompts: 8
+  prompt_length: 3500
+  output_length: 500
+  request_rate: "inf"
+  model: "nvidia/Llama-3.1-8B-Instruct-FP8"
+  backend: "openai"
+  base_url: "http://138.197.252.211:80"
+  endpoint: "/v1/completions"
+
+- num_prompts: 16
+  prompt_length: 3500
+  output_length: 500
+  request_rate: "inf"
+  model: "nvidia/Llama-3.1-8B-Instruct-FP8"
+  backend: "openai"
+  base_url: "http://138.197.252.211:80"
+  endpoint: "/v1/completions"
+
+- num_prompts: 20
+  prompt_length: 3500
+  output_length: 500
+  request_rate: "inf"
+  model: "nvidia/Llama-3.1-8B-Instruct-FP8"
+  backend: "openai"
+  base_url: "http://138.197.252.211:80"
+  endpoint: "/v1/completions"
+
+- num_prompts: 32
+  prompt_length: 3500
+  output_length: 500
+  request_rate: "inf"
+  model: "nvidia/Llama-3.1-8B-Instruct-FP8"
+  backend: "openai"
+  base_url: "http://138.197.252.211:80"
+  endpoint: "/v1/completions"
+
+- num_prompts: 64
+  prompt_length: 3500
+  output_length: 500
+  request_rate: "inf"
+  model: "nvidia/Llama-3.1-8B-Instruct-FP8"
+  backend: "openai"
+  base_url: "http://138.197.252.211:80"
+  endpoint: "/v1/completions"
+
+
+
+
